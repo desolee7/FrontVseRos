@@ -15,18 +15,18 @@ page_bg_img = """
     background-color: black;
 }
 
-.st-ax {
-    background-color: rgb(188,22,226);
-}
+# .st-ax {
+#     background-color: rgb(188,22,226);
+# }
 
 [data-testid="stWidgetLabel"] {
     color: rgb(253,255,254);
     font: Optima, sans-serif;
 }
 
-[class="eyeqlp51 st-emotion-cache-6rlrad ex0cdmw0"] {
-    color: rgb(188,22,226);
-}
+# [class="eyeqlp51 st-emotion-cache-6rlrad ex0cdmw0"] {
+#     color: rgb(188,22,226);
+# }
 
 [class="st-emotion-cache-19rxjzo ef3psqc12"] {
     color: rgb(253,255,254);
@@ -41,12 +41,12 @@ gradient_text_html = """
     background-color: rgb(253,255,254);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 50px;
+    font-size: 60px;
     font-family: Optima, sans-serif;
     font-weight: bold;
     padding: 10px;
     text-align: center;
-    letter-spacing: 2px;
+    letter-spacing: 4px;
 }
 </style>
 
