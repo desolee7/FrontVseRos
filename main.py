@@ -15,18 +15,10 @@ page_bg_img = """
     background-color: black;
 }
 
-# .st-ax {
-#     background-color: rgb(188,22,226);
-# }
-
 [data-testid="stWidgetLabel"] {
     color: rgb(253,255,254);
     font: Optima, sans-serif;
 }
-
-# [class="eyeqlp51 st-emotion-cache-6rlrad ex0cdmw0"] {
-#     color: rgb(188,22,226);
-# }
 
 [class="st-emotion-cache-19rxjzo ef3psqc12"] {
     color: rgb(253,255,254);
@@ -60,58 +52,29 @@ def extract_video(uploaded_video):
     encoded_video_content = base64.b64encode(video_content).decode('utf-8')
     return encoded_video_content
 
-video_input_option = st.radio('Выберите способ добавления видео', ('Загрузить видеофайл', 'Вставить ссылку на RuTube'))
-
 video_title = st.text_input('Введите название видео')
 video_description = st.text_area('Введите описание видео', height=100)
 
-if video_input_option == 'Загрузить видеофайл':
-    uploaded_video = st.file_uploader('Перетащите видео файл', type=["mp4", "avi", "mov"])
+uploaded_video = st.file_uploader('Перетащите видео файл', type=["mp4", "avi", "mov"])
 
-    if uploaded_video is not None and st.button("Загрузить видео"):
-        encoded_video_content = extract_video(uploaded_video)
-        
-        data_to_send = {
-            "video_title": video_title,
-            "video_description": video_description,
-            "video_content": encoded_video_content
-        }
-        
-        response = requests.post('https://echo.free.beeceptor.com', json=data_to_send)
-        
-        st.video(uploaded_video)
-        st.write(f"Название видео: {video_title}")
-        st.write(f"Описание видео: {video_description}")
+if uploaded_video is not None and st.button("Загрузить видео"):
+    encoded_video_content = extract_video(uploaded_video)
+    
+    data_to_send = {
+        "video_title": video_title,
+        "video_description": video_description,
+        "video_content": encoded_video_content
+    }
+    
+    response = requests.post('https://echo.free.beeceptor.com', json=data_to_send)
+    
+    st.video(uploaded_video)
+    st.write(f"Название видео: {video_title}")
+    st.write(f"Описание видео: {video_description}")
 
-        get_response = requests.get('https://echo.free.beeceptor.com')
-        if get_response.status_code == 200:
-            json_data = get_response.json()
-            st.json(json_data)
-        else:
-            st.error(f"Не удалось получить данные. Статус: {get_response.status_code}")
-
-elif video_input_option == 'Вставить ссылку на RuTube':
-    video_url = st.text_input('Вставьте ссылку на видео с RuTube')
-
-    if video_url and st.button("Загрузить по ссылке"):
-        video_embed_code = f"""
-        <iframe src="{video_url}" width="700" height="400" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        """
-        data_to_send = {
-            "video_title": video_title,
-            "video_description": video_description,
-            "video_url": video_url
-        }
-        
-        response = requests.post('https://echo.free.beeceptor.com', json=data_to_send)
-        
-        st.markdown(video_embed_code, unsafe_allow_html=True)  
-        st.write(f"Название видео: {video_title}")
-        st.write(f"Описание видео: {video_description}")
-
-        get_response = requests.get('https://echo.free.beeceptor.com')
-        if get_response.status_code == 200:
-            json_data = get_response.json()
-            st.json(json_data)
-        else:
-            st.error(f"Не удалось получить данные. Статус: {get_response.status_code}")
+    get_response = requests.get('https://echo.free.beeceptor.com')
+    if get_response.status_code == 200:
+        json_data = get_response.json()
+        st.json(json_data)
+    else:
+        st.error(f"Не удалось получить данные. Статус: {get_response.status_code}")
